@@ -1,0 +1,44 @@
+﻿---------- 引入外部类 ----------
+KHUtilForLua = luanet.import_type("KH.KHUtilForLua")
+WindowLayer = luanet.import_type("KH.WindowLayer")
+KHUIManager = luanet.import_type("KH.KHUIManager")
+
+
+---------- 这里判断是否存在变量（有可能在别的 lua 文件里声明过变量） ----------
+if (kihan == nil) then
+	kihan = {}
+end
+
+---------- 声明一个类 ----------
+if (kihan.SchoolPlugin == nil) then
+	kihan.SchoolPlugin = {}
+end
+
+
+---------- LuaClass 约定函数 ----------
+function kihan.SchoolPlugin:Init()
+	print("Init -> SchoolPlugin")
+end
+---------- 结束：LuaClass 约定函数 ----------
+
+
+
+---------- Plugin 约定函数 ----------
+function kihan.SchoolPlugin:GetViews()
+	local mainView = "UILua/SchoolPlugin/ClassroomMainView"; -- 相对于Resources目录下的路径
+	KHUIManager.LuaGetInstance():RegisterWindow(mainView, WindowLayer.FreeWindow) -- 注册一个新窗口，类型为FreeWindow
+	return {mainView};
+end
+
+function kihan.SchoolPlugin:LoadWhenShowView()
+	return true;
+end
+
+function kihan.SchoolPlugin:GetPreloadDatas()
+	return {};
+end
+
+function kihan.SchoolPlugin:GetPreloadResources()
+	return {"UI/PropBagItem"};
+end
+---------- 结束：Plugin 约定函数 ----------
